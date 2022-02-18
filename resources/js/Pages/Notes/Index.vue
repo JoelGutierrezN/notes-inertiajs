@@ -22,9 +22,13 @@
                     </div>
                     <div class="md:col-span-2 mt-5 md:mt-0">
                         <div class="shadow bg-white md:rounded-md p-4">
-                            <Link :href="route('notes.create')" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-md">
-                                + Nueva Nota
-                            </Link>
+                            <div class="flex justify-between my-6">
+                                <input type="text" class="form-input rounded-md shadow-sm" placeholder="Buscar..." v-model="q">
+                                <Link :href="route('notes.create')" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-md">
+                                    + Nueva Nota
+                                </Link>
+                            </div>
+                                <hr class="my-6">
                             <table>
                                 <tr v-for="note in notes" :key="note.id">
                                     <td class="border px-4 py-2">
@@ -63,8 +67,18 @@ export default defineComponent({
         Link
     },
 
+    data(){
+        return {
+            q: ''
+        }
+    },
     props:{
         notes: Array
+    },
+    watch:{
+        q( value ){
+            this.$inertia.get(this.route('notes.index', { q: value }), {}, { preserveState: true })
+        }
     }
 });
 </script>
