@@ -44,7 +44,7 @@ class NoteController extends Controller
 
         Note::create($request->all());
 
-        return redirect()->route('notes.index');
+        return redirect()->route('notes.index')->with('status', 'Nota Creada');;
     }
 
     /**
@@ -85,7 +85,7 @@ class NoteController extends Controller
 
         $note->update($request->all());
 
-        return redirect()->route('notes.index');
+        return redirect()->route('notes.index')->with('status', 'Nota Actualizada');;
     }
 
     /**
@@ -96,6 +96,8 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
-        //
+        $note->delete();
+
+        return redirect()->route('notes.index')->with('status', 'Nota Eliminada');
     }
 }
